@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Rainbow Hunt — Catch a color, name it!</title>
+<meta name="title-en" content="Rainbow Hunt — Catch a color, name it!">
+<meta name="title-de" content="Regenbogenjagd — Fang Farben, gib Namen!">
+<meta name="description" content="A camera game for kids aged 6 to 10: catch colors in the real world, give them your own names, and discover what grown-ups call them. No ads, no tracking, works offline.">
+<meta property="og:title" content="Rainbow Hunt — Catch a color, name it!">
+<meta property="og:description" content="A camera game for kids: catch colors, name them, and fill nine islands in your own Color World.">
+<meta property="og:image" content="https://rainbowhunt.app/assets/icon-512.png">
+<meta property="og:url" content="https://rainbowhunt.app/">
+<link rel="icon" href="assets/icon-180.png">
+<link rel="apple-touch-icon" href="assets/icon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+<script src="assets/lang.js"></script>
+<style>
+  /* Hero: headline on the left, the reveal screen inside rainbow arcs on the right. */
+  .hero .wrap { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: 40px; align-items: center;
+    padding-block: 64px 40px; }
+  .kicker { font-weight: 800; letter-spacing: .08em; text-transform: uppercase; font-size: 13px; color: var(--accent); }
+  .hero h1 { font-size: clamp(40px, 5.6vw, 66px); margin: 12px 0 18px; letter-spacing: -.01em; }
+  .hero h1 span { display: block; }
+  .hero h1 .tag { font-size: .48em; color: var(--muted); font-weight: 500; margin-top: 10px; }
+  .hero p.sub { font-size: 20px; color: var(--muted); max-width: 34em; margin: 0 0 28px; }
+  .ctas { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 26px; }
+  .badge { font-size: 14px; font-weight: 700; padding: 6px 12px; border-radius: 999px; background: var(--surface);
+    border: 1px solid var(--line); color: var(--muted); }
+
+  .stage { position: relative; display: grid; place-items: center; min-height: 520px; }
+  .arcs { position: absolute; inset: 0; display: grid; place-items: center; overflow: hidden; }
+  .arcs i { position: absolute; border-radius: 50%; border-style: solid; border-color: transparent;
+    width: var(--d); height: var(--d); border-width: 22px; border-top-color: var(--c); border-left-color: var(--c);
+    border-right-color: var(--c); transform: rotate(0deg); top: 8%; }
+  .phone { position: relative; width: min(300px, 72%); border-radius: 44px; padding: 10px; background: #0f0d18;
+    box-shadow: 0 30px 60px -20px rgb(40 20 120 / .45); }
+  .phone img { border-radius: 34px; width: 100%; aspect-ratio: 1206 / 2622; object-fit: cover; }
+
+  section.block { padding-block: 72px 8px; }
+  .eyebrow { font-weight: 800; letter-spacing: .08em; text-transform: uppercase; font-size: 13px; color: var(--accent); }
+  .block h2 { font-size: clamp(32px, 4.6vw, 48px); margin: 10px 0 14px; }
+  .block p.intro { font-size: 19px; color: var(--muted); max-width: 40em; margin: 0; }
+
+  .steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; margin-top: 36px; }
+  .step { display: grid; gap: 16px; align-content: start; }
+  .step .shot { border-radius: 30px; overflow: hidden; border: 1px solid var(--line); background: var(--surface);
+    aspect-ratio: 3 / 4; }
+  .step .shot img { width: 100%; height: 100%; object-fit: cover; object-position: center 38%; }
+  .step h3 { font-size: 24px; display: flex; align-items: baseline; gap: 10px; }
+  .step h3 .n { font-size: 15px; color: var(--accent-ink); background: var(--accent); width: 28px; height: 28px;
+    border-radius: 50%; display: inline-grid; place-items: center; flex: none; transform: translateY(-3px); }
+  .step p { margin: 0; color: var(--muted); }
+
+  .world { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 40px; align-items: center; margin-top: 28px; }
+  .islands { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 26px; max-width: 420px; }
+  .islands span { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 15px; }
+  .islands i { width: 22px; height: 16px; border-radius: 50% 45% 55% 40%; background: var(--c); flex: none;
+    box-shadow: 0 0 0 3px #f6e2b3; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .duo img { border-radius: 28px; border: 1px solid var(--line); }
+
+  .parents { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; margin-top: 32px; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; }
+  .card h3 { font-size: 20px; margin-bottom: 6px; }
+  .card p { margin: 0; color: var(--muted); font-size: 16px; }
+
+  .faq { margin-top: 28px; display: grid; gap: 10px; max-width: 780px; }
+  .faq details { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 16px 20px; }
+  .faq summary { cursor: pointer; font: 600 19px/1.3 var(--display); }
+  .faq p { margin: 10px 0 0; color: var(--muted); }
+
+  @media (max-width: 860px) {
+    .hero .wrap, .world { grid-template-columns: 1fr; }
+    .stage { min-height: 440px; }
+    .steps { grid-template-columns: 1fr; }
+    .step .shot { aspect-ratio: 4 / 3; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="./"><img src="assets/icon-180.png" alt=""><span data-lang="en">Rainbow Hunt</span><span data-lang="de">Regenbogenjagd</span></a>
+    <nav>
+      <a class="hide-sm" href="#how"><span data-lang="en">How it works</span><span data-lang="de">So geht’s</span></a>
+      <a class="hide-sm" href="#parents"><span data-lang="en">For parents</span><span data-lang="de">Für Eltern</span></a>
+      <a class="hide-sm" href="#faq">FAQ</a>
+      <span class="langs" role="group" aria-label="Language / Sprache">
+        <button type="button" data-set-lang="en">EN</button><button type="button" data-set-lang="de">DE</button>
+      </span>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <div class="kicker"><span data-lang="en">A camera game for kids aged 6 to 10</span><span data-lang="de">Ein Kamera-Spiel für Kinder von 6 bis 10</span></div>
+        <h1>
+          <span data-lang="en">Rainbow Hunt</span><span data-lang="de">Regenbogenjagd</span>
+          <span class="tag" data-lang="en">Catch a color, name it!</span><span class="tag" data-lang="de">Fang Farben, gib Namen!</span>
+        </h1>
+        <p class="sub" data-lang="en">Point the iPhone at anything: a leaf, a toy, a sock. Catch its color, give it your very own name, and find out what grown-ups call it. Every color moves onto one of nine islands in your Color World.</p>
+        <p class="sub" data-lang="de">Richte das iPhone auf irgendetwas: ein Blatt, ein Spielzeug, eine Socke. Fang die Farbe ein, gib ihr deinen eigenen Namen und finde heraus, wie Erwachsene sie nennen. Jede Farbe zieht auf eine von neun Inseln in deiner Farbwelt.</p>
+        <div class="ctas">
+          <span class="soon"><small data-lang="en">Coming soon on the</small><small data-lang="de">Bald im</small><b>App Store</b></span>
+          <a class="btn btn-ghost" href="#how"><span data-lang="en">See how it works</span><span data-lang="de">So funktioniert’s</span></a>
+        </div>
+        <div class="badges">
+          <span class="badge"><span data-lang="en">No ads</span><span data-lang="de">Keine Werbung</span></span>
+          <span class="badge"><span data-lang="en">No tracking</span><span data-lang="de">Kein Tracking</span></span>
+          <span class="badge"><span data-lang="en">Works offline</span><span data-lang="de">Funktioniert offline</span></span>
+          <span class="badge">English · Deutsch</span>
+        </div>
+      </div>
+      <div class="stage" aria-hidden="true">
+        <div class="arcs">
+          <i style="--d: 560px; --c: var(--red)"></i>
+          <i style="--d: 516px; --c: var(--orange)"></i>
+          <i style="--d: 472px; --c: var(--yellow)"></i>
+          <i style="--d: 428px; --c: var(--green)"></i>
+          <i style="--d: 384px; --c: var(--blue)"></i>
+          <i style="--d: 340px; --c: var(--purple)"></i>
+        </div>
+        <div class="phone">
+          <img data-lang="en" src="assets/screens/reveal-en.jpg" alt="">
+          <img data-lang="de" src="assets/screens/reveal-de.jpg" alt="">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="bands" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+
+  <section class="block" id="how">
+    <div class="wrap">
+      <div class="eyebrow"><span data-lang="en">How it works</span><span data-lang="de">So geht’s</span></div>
+      <h2><span data-lang="en">Catch. Name. Discover.</span><span data-lang="de">Fangen. Benennen. Entdecken.</span></h2>
+      <p class="intro" data-lang="en">One round takes less than a minute, and a 7-year-old can play it without help. It’s even better with a parent next to them.</p>
+      <p class="intro" data-lang="de">Eine Runde dauert weniger als eine Minute, und ein 7-jähriges Kind schafft sie allein. Mit Mama oder Papa daneben macht es noch mehr Spaß.</p>
+      <div class="steps">
+        <article class="step">
+          <div class="shot"><img src="assets/screens/catch.jpg" alt="" loading="lazy" style="object-position: center 62%"></div>
+          <h3><span class="n">1</span><span data-lang="en">Catch a color</span><span data-lang="de">Farbe fangen</span></h3>
+          <p data-lang="en">Aim the circle at something colorful and tap the big Catch button. The game keeps the color and a little photo of what you caught.</p>
+          <p data-lang="de">Ziel mit dem Kreis auf etwas Buntes und tipp auf den großen Fangen-Knopf. Das Spiel merkt sich die Farbe und ein kleines Foto davon.</p>
+        </article>
+        <article class="step">
+          <div class="shot">
+            <img data-lang="en" src="assets/screens/naming-en.jpg" alt="" loading="lazy">
+            <img data-lang="de" src="assets/screens/naming-de.jpg" alt="" loading="lazy">
+          </div>
+          <h3><span class="n">2</span><span data-lang="en">Give it your name</span><span data-lang="de">Einen Namen geben</span></h3>
+          <p data-lang="en">“Froggy green”? “Dinosaur purple”? Say it into the microphone or type it. Every name is allowed.</p>
+          <p data-lang="de">„Froschgrün“? „Dino-Lila“? Sag den Namen ins Mikrofon oder tipp ihn ein. Jeder Name ist erlaubt.</p>
+        </article>
+        <article class="step">
+          <div class="shot">
+            <img data-lang="en" src="assets/screens/reveal-en.jpg" alt="" loading="lazy">
+            <img data-lang="de" src="assets/screens/reveal-de.jpg" alt="" loading="lazy">
+          </div>
+          <h3><span class="n">3</span><span data-lang="en">See what grown-ups say</span><span data-lang="de">Hören, was Erwachsene sagen</span></h3>
+          <p data-lang="en">The card flips: “Grown-ups call it: dark green”, plus a fancy bonus name. Tap the speaker and the names are read aloud.</p>
+          <p data-lang="de">Die Karte dreht sich: „Erwachsene sagen dazu: Dunkelgrün“, dazu ein schicker Bonus-Name. Tipp auf den Lautsprecher, und die Namen werden vorgelesen.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="world">
+    <div class="wrap world">
+      <div>
+        <div class="eyebrow"><span data-lang="en">Color World</span><span data-lang="de">Farbwelt</span></div>
+        <h2><span data-lang="en">Nine islands to discover</span><span data-lang="de">Neun Inseln zum Entdecken</span></h2>
+        <p class="intro" data-lang="en">Every caught color lands on its island. Islands start out foggy and light up with their first color. Find all nine and the whole rainbow appears.</p>
+        <p class="intro" data-lang="de">Jede gefangene Farbe landet auf ihrer Insel. Die Inseln sind erst neblig und leuchten mit ihrer ersten Farbe auf. Wer alle neun findet, bekommt den ganzen Regenbogen.</p>
+        <div class="islands">
+          <span><i style="--c: var(--red)"></i><span data-lang="en">Red</span><span data-lang="de">Rot</span></span>
+          <span><i style="--c: var(--orange)"></i>Orange</span>
+          <span><i style="--c: var(--yellow)"></i><span data-lang="en">Yellow</span><span data-lang="de">Gelb</span></span>
+          <span><i style="--c: var(--green)"></i><span data-lang="en">Green</span><span data-lang="de">Grün</span></span>
+          <span><i style="--c: var(--blue)"></i><span data-lang="en">Blue</span><span data-lang="de">Blau</span></span>
+          <span><i style="--c: var(--purple)"></i><span data-lang="en">Purple</span><span data-lang="de">Lila</span></span>
+          <span><i style="--c: var(--pink)"></i><span data-lang="en">Pink</span><span data-lang="de">Rosa</span></span>
+          <span><i style="--c: var(--brown)"></i><span data-lang="en">Brown</span><span data-lang="de">Braun</span></span>
+          <span><i style="--c: linear-gradient(135deg, #fff, #9e9e9e, #2b2b2b)"></i><span data-lang="en">Black &amp; White</span><span data-lang="de">Schwarz-Weiß</span></span>
+        </div>
+      </div>
+      <div class="duo">
+        <img src="assets/screens/map.jpg" alt="" loading="lazy">
+        <img src="assets/screens/detail.jpg" alt="" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="parents">
+    <div class="wrap">
+      <div class="eyebrow"><span data-lang="en">For parents</span><span data-lang="de">Für Eltern</span></div>
+      <h2><span data-lang="en">Made to be safe to hand over</span><span data-lang="de">Gemacht, um es ruhig aus der Hand zu geben</span></h2>
+      <div class="parents">
+        <div class="card">
+          <h3><span data-lang="en">Nothing leaves the iPhone</span><span data-lang="de">Nichts verlässt das iPhone</span></h3>
+          <p data-lang="en">Photos, names and voices stay on the device. No account, no analytics, no servers. Speech is recognized on the iPhone itself.</p>
+          <p data-lang="de">Fotos, Namen und Stimmen bleiben auf dem Gerät. Kein Konto, keine Analyse, keine Server. Die Spracherkennung läuft direkt auf dem iPhone.</p>
+        </div>
+        <div class="card">
+          <h3><span data-lang="en">No ads, no purchases</span><span data-lang="de">Keine Werbung, keine Käufe</span></h3>
+          <p data-lang="en">One price in the App Store, then nothing to buy and nothing to click away from.</p>
+          <p data-lang="de">Ein Preis im App Store, danach gibt es nichts mehr zu kaufen und nichts, was wegklickt.</p>
+        </div>
+        <div class="card">
+          <h3><span data-lang="en">Grown-ups only area</span><span data-lang="de">Bereich nur für Erwachsene</span></h3>
+          <p data-lang="en">Settings sit behind a parental gate: a sum written out in words. Choose the language, turn sounds off, or delete all colors.</p>
+          <p data-lang="de">Die Einstellungen liegen hinter einer Eltern-Sperre: einer Rechenaufgabe in Worten. Dort wählst du die Sprache, schaltest Töne aus oder löschst alle Farben.</p>
+        </div>
+        <div class="card">
+          <h3><span data-lang="en">Learn colors in two languages</span><span data-lang="de">Farben in zwei Sprachen</span></h3>
+          <p data-lang="en">About 150 everyday color names in English and German, plus thousands of fancy bonus names. Play in either language.</p>
+          <p data-lang="de">Rund 150 alltägliche Farbnamen auf Deutsch und Englisch, dazu Tausende schicke Bonus-Namen. Gespielt wird in beiden Sprachen.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="faq">
+    <div class="wrap">
+      <div class="eyebrow">FAQ</div>
+      <h2><span data-lang="en">Questions parents ask</span><span data-lang="de">Was Eltern fragen</span></h2>
+      <div class="faq">
+        <details>
+          <summary><span data-lang="en">Which iPhones does it run on?</span><span data-lang="de">Auf welchen iPhones läuft es?</span></summary>
+          <p data-lang="en">iPhones with iOS 18 or later. Saying names into the microphone usually works right away in the iPhone’s own language. For the other language, iOS 26 or later downloads Apple’s speech model once.</p>
+          <p data-lang="de">Auf iPhones mit iOS 18 oder neuer. Namen ins Mikrofon sagen klappt meist sofort in der Sprache des iPhones. Für die andere Sprache lädt iOS 26 oder neuer einmalig Apples Sprachmodell.</p>
+        </details>
+        <details>
+          <summary><span data-lang="en">Does it need the internet?</span><span data-lang="de">Braucht es Internet?</span></summary>
+          <p data-lang="en">No. The whole game works offline, in the car, the park or on holiday. The only download ever is Apple’s speech model described above.</p>
+          <p data-lang="de">Nein. Das ganze Spiel funktioniert offline, im Auto, im Park oder im Urlaub. Der einzige Download überhaupt ist das oben beschriebene Sprachmodell von Apple.</p>
+        </details>
+        <details>
+          <summary><span data-lang="en">How accurate are the colors?</span><span data-lang="de">Wie genau sind die Farben?</span></summary>
+          <p data-lang="en">In daylight or a well-lit room, very good. Warm lamps make everything a bit more orange, just as they do for our eyes. When it’s too dark, the game says so and offers the torch.</p>
+          <p data-lang="de">Bei Tageslicht oder in einem hellen Raum sehr gut. Warmes Lampenlicht macht alles etwas oranger, genau wie für unsere Augen. Ist es zu dunkel, sagt das Spiel Bescheid und bietet die Taschenlampe an.</p>
+        </details>
+        <details>
+          <summary><span data-lang="en">What if my child calls a yellow “green”?</span><span data-lang="de">Was, wenn mein Kind Gelb „Grün“ nennt?</span></summary>
+          <p data-lang="en">The name is kept, because it’s their color. The reveal gently says that this color lives on Yellow Island, so they learn something along the way.</p>
+          <p data-lang="de">Der Name bleibt, denn es ist ihre Farbe. Die Auflösung sagt freundlich, dass diese Farbe auf der Gelben Insel wohnt, und so lernt das Kind nebenbei dazu.</p>
+        </details>
+        <details>
+          <summary><span data-lang="en">Who makes Rainbow Hunt?</span><span data-lang="de">Wer macht Regenbogenjagd?</span></summary>
+          <p data-lang="en">Andrei Kolmogorov, an independent developer in Austria. It started as a game to play with the family at home.</p>
+          <p data-lang="de">Andrei Kolmogorov, ein unabhängiger Entwickler aus Österreich. Es begann als Spiel für die eigene Familie.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Andrei Kolmogorov</span>
+    <nav>
+      <a href="privacy.html"><span data-lang="en">Privacy</span><span data-lang="de">Datenschutz</span></a>
+      <a href="terms.html"><span data-lang="en">Terms &amp; imprint</span><span data-lang="de">Nutzungsbedingungen &amp; Impressum</span></a>
+      <a href="support.html">Support</a>
+    </nav>
+    <span class="credit" data-lang="en">Fancy color names from <a href="https://github.com/meodai/color-names">color-names</a> by David Aerne (MIT License).</span>
+    <span class="credit" data-lang="de">Schicke Farbnamen aus <a href="https://github.com/meodai/color-names">color-names</a> von David Aerne (MIT-Lizenz).</span>
+  </div>
+</footer>
+</body>
+</html>
