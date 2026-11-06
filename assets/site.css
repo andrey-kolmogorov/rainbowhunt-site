@@ -71,10 +71,6 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; line-height: 1.1; te
   padding: 15px 22px; border-radius: 999px; text-decoration: none; border: 2px solid transparent; }
 .btn-primary { background: var(--accent); color: var(--accent-ink); }
 .btn-ghost { border-color: var(--line); color: var(--ink); background: var(--surface); }
-.soon { display: inline-flex; flex-direction: column; gap: 2px; padding: 11px 20px; border-radius: 14px;
-  background: var(--ink); color: var(--bg); line-height: 1.15; }
-.soon small { font-size: 12px; opacity: .8; font-weight: 600; }
-.soon b { font: 600 19px var(--display); }
 
 /* Footer */
 footer { border-top: 1px solid var(--line); margin-top: 96px; }

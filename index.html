@@ -11,6 +11,7 @@
 <meta property="og:description" content="A camera game for kids: catch colors, name them, and fill nine islands in your own Color World.">
 <meta property="og:image" content="https://rainbowhunt.app/assets/icon-512.png">
 <meta property="og:url" content="https://rainbowhunt.app/">
+<meta name="apple-itunes-app" content="app-id=6824181425">
 <link rel="icon" href="assets/icon-180.png">
 <link rel="apple-touch-icon" href="assets/icon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,7 +28,14 @@
   .hero h1 span { display: block; }
   .hero h1 .tag { font-size: .48em; color: var(--muted); font-weight: 500; margin-top: 10px; }
   .hero p.sub { font-size: 20px; color: var(--muted); max-width: 34em; margin: 0 0 28px; }
-  .ctas { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .ctas { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+  /* Apple's official badge (assets/app-store-badge-*.svg), with the clear space Apple asks for. */
+  .store { display: inline-block; padding: 2px; border-radius: 12px; }
+  .store img { height: 54px; width: auto; }
+  /* The QR code is for parents reading on a computer; phones get the badge (and Safari's banner). */
+  .qr { display: flex; align-items: center; gap: 14px; margin: 22px 0 0; color: var(--muted); font-size: 15px; font-weight: 600; }
+  .qr img { width: 104px; height: 104px; padding: 6px; background: #fff; border-radius: 12px; border: 1px solid var(--line); }
+  @media (max-width: 860px), (pointer: coarse) { .qr { display: none; } }
   .badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 26px; }
   .badge { font-size: 14px; font-weight: 700; padding: 6px 12px; border-radius: 999px; background: var(--surface);
     border: 1px solid var(--line); color: var(--muted); }
@@ -110,9 +118,16 @@
         <p class="sub" data-lang="en">Point the iPhone at anything: a leaf, a toy, a sock. Catch its color, give it your very own name, and find out what grown-ups call it. Every color moves onto one of nine islands in your Color World.</p>
         <p class="sub" data-lang="de">Richte das iPhone auf irgendetwas: ein Blatt, ein Spielzeug, eine Socke. Fang die Farbe ein, gib ihr deinen eigenen Namen und finde heraus, wie Erwachsene sie nennen. Jede Farbe zieht auf eine von neun Inseln in deiner Farbwelt.</p>
         <div class="ctas">
-          <span class="soon"><small data-lang="en">Coming soon on the</small><small data-lang="de">Bald im</small><b>App Store</b></span>
+          <a class="store" href="https://apps.apple.com/app/id6824181425">
+            <img data-lang="en" src="assets/app-store-badge-en.svg" width="162" height="54" alt="Download on the App Store">
+            <img data-lang="de" src="assets/app-store-badge-de.svg" width="162" height="54" alt="Laden im App Store">
+          </a>
           <a class="btn btn-ghost" href="#how"><span data-lang="en">See how it works</span><span data-lang="de">So funktioniert’s</span></a>
         </div>
+        <figure class="qr">
+          <img src="assets/app-store-qr.svg" alt="" width="104" height="104">
+          <figcaption><span data-lang="en">On a computer? Scan this with<br>your iPhone camera to get the app.</span><span data-lang="de">Am Computer? Scanne den Code mit<br>der iPhone-Kamera, um die App zu laden.</span></figcaption>
+        </figure>
         <div class="badges">
           <span class="badge"><span data-lang="en">No ads</span><span data-lang="de">Keine Werbung</span></span>
           <span class="badge"><span data-lang="en">No tracking</span><span data-lang="de">Kein Tracking</span></span>
